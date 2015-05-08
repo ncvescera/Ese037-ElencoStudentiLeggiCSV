@@ -22,6 +22,10 @@ int main(int argc, char** argv) {
     int i;
     FILE *inf;
     char fileName[MAX_FNAMELEN+1];
+    char temporanea[MAX_STRLEN+1];  /* Questa variabile verrà impiegata per leggere
+                                     * delle stringhe che non saranno effettivamente
+                                     * utilizzate.
+                                     */ 
     
     // Codice per la richiesta del nome del file
     printf("Inserisci il nome del file da cui leggere i dati: ");
@@ -34,21 +38,27 @@ int main(int argc, char** argv) {
         exit(1);
     }
     
-       
-    // La prima riga contiene l'instestazione: la leggo e non ne faccio nulla
-    fscanf(inf, "%[^;];%[^;];%[^;];%[^;\n]\n", s.nome, s.cognome, s.nome, s.classe);
+    // La prima riga contiene l'instestazione: la leggo e non ne faccio nulla.
+    fscanf(inf, "%[^;];%[^;];%[^;];%[^;\n]\n", 
+                    temporanea,
+                    temporanea,
+                    temporanea,
+                    temporanea);
     
     i=0;
-    fscanf(inf, "%[^;];%[^;];%d;%[^;\n]\n", s.nome, s.cognome, &(s.eta), s.classe);
     while(!feof(inf)) {
         i++;
+        fscanf(inf, "%[^;];%[^;];%d;%[^;\n]\n",
+                s.nome,
+                s.cognome,
+                &(s.eta),
+                s.classe);
         printf("Studente %d\nNome: %s\nCognome: %s\nEta': %d\nClasse: %s\n\n",
                 i,
                 s.nome,
                 s.cognome,
                 s.eta,
                 s.classe);
-        fscanf(inf, "%[^;];%[^;];%d;%[^;\n]\n", s.nome, s.cognome, &(s.eta), s.classe);
     }
     fclose(inf);
     
